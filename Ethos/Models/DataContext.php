@@ -10,7 +10,7 @@ class DataContext{
     private $_serverName = "127.0.0.1";
     private $_userName = "thedigit";
     private $_password = "mY.q2VDz45k5@O";
-    private $_connection;
+    public $_connection;
     
     public function __construct(){
         
