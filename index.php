@@ -140,7 +140,7 @@ function findStr($start,$end, $string){
     if (preg_match("/{$start}(.*?){$end}/", $string, $match) == 1) {
         return $match[1];
     }
-    return "N/A";
+    return null;
 }
 
 function getBetween($content,$start,$end){
