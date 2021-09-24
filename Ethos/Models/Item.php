@@ -247,24 +247,24 @@ class Item{
         try{
             $saveQuery = "INSERT INTO Items "
                 . "SET BetaCaryophyllene=:BetaCaryophyllene,"
-                . "SET BetaMyrcene=:BetaMyrcene, "
-                . "SET BetaPinene=:BetaPinene, "
-                . "SET Bisabolol=:Bisabolol, "
-                . "SET CaryophylleneOxide=:CaryophylleneOxide, "
-                . "SET Humulene=:Humulene, "
-                . "SET Limonene=:Limonene, "
-                . "SET Linalool=:Linalool, "
-                . "SET Pinene=:Pinene, "
-                . "SET Terpinolene=:Terpinolene, "
-                . "SET cName=:cName, "
-                . "SET Description=:Description, "
-                . "SET EightPrice=:EighthPrice, "
-                . "SET QuarterPrice=:QuarterPrice, "
-                . "SET GramPrice=:GramPrice, "
-                . "SET Name=:Name, "
-                . "SET Lineage=:Lineage, "
-                . "SET ThcContent=:ThcContent, "
-                . "SET StrainType=:StrainType";
+                . "BetaMyrcene=:BetaMyrcene, "
+                . "BetaPinene=:BetaPinene, "
+                . "Bisabolol=:Bisabolol, "
+                . "CaryophylleneOxide=:CaryophylleneOxide, "
+                . "Humulene=:Humulene, "
+                . "Limonene=:Limonene, "
+                . "Linalool=:Linalool, "
+                . "Pinene=:Pinene, "
+                . "Terpinolene=:Terpinolene, "
+                . "cName=:cName, "
+                . "Description=:Description, "
+                . "EightPrice=:EighthPrice, "
+                . "QuarterPrice=:QuarterPrice, "
+                . "GramPrice=:GramPrice, "
+                . "Name=:Name, "
+                . "Lineage=:Lineage, "
+                . "ThcContent=:ThcContent, "
+                . "StrainType=:StrainType";
         
             $stmt = $this->_dataContext->prepare($saveQuery);
             $stmt->bindParam(":Name", $this->getName());
@@ -288,7 +288,7 @@ class Item{
             $stmt->bindParam(":StrainType", $this->getStrainType());
 
             $stmt->execute();
-            $stmt->debugDumpParams();
+            //$stmt->debugDumpParams();
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
