@@ -12,6 +12,12 @@ class Item{
     private $_strainType;
     private $_cName;
     private $_description;
+    private $_lineage1;
+    private $_lineage2;
+    private $_lineage3;
+    private $_lineage4;
+    private $_lineage5;
+    
     private $_terpines = [
         'beta-caryophyllene' => "",
         'limonene' => "",
@@ -207,6 +213,37 @@ class Item{
         return $this->_description;
     }
     
+    public function setLineage1($lineage){
+        $this->_lineage1 = $lineage;
+    }
+    
+    public function getLineage1(){
+        return $this->_lineage1;
+    }
+    
+    public function setLineage2($lineage){
+        $this->_lineage2 = $lineage;
+    }
+    
+    public function getLineage2(){
+        return $this->_lineage2;
+    }
+    
+    public function setLineage3($lineage){
+        $this->_lineage3 = $lineage;
+    }
+    
+    public function getLineage3(){
+        return $this->_lineage3;
+    }
+    
+    public function setLineage4($lineage){
+        $this->_lineage4 = $lineage;
+    }
+    
+    public function getLineage4(){
+        return $this->_lineage4;
+    }
     
     public function save(){
         try{

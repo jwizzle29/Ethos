@@ -74,26 +74,70 @@ foreach($products as $item){
     }
     $item->setDescription($sdata->description);
     $item->setPinene(
-            findTerpene("Pinene-", "%", $sdata->description)
+            findStr("Pinene-", "%", $sdata->description)
     );
-    echo "Pinene : " . findTerpene("Pinene-", "%", $sdata->description) . "<br>";
-    echo "BetaPinene : " . findTerpene("B Pinene-", "%", $sdata->description) . "<br>";
-    echo "BetaMyrcene : " . findTerpene("B Myrcene-", "%", $sdata->description) . "<br>";
-    echo "BetaCaryophyllene : " . findTerpene("B Caryophyllene-", "%", $sdata->description) . "<br>";
-    echo "Bisabolol : " . findTerpene("Bisabolol-", "%", $sdata->description) . "<br>";
-    echo "CaryophylleneOxide : " . findTerpene("CaryophylleneOxide-", "%", $sdata->description) . "<br>";
-    echo "Humulene : " . findTerpene("Humulene-", "%", $sdata->description) . "<br>";
-    echo "Limonene : " . findTerpene("Limonene-", "%", $sdata->description) . "<br>";
-    echo "Linalool : " . findTerpene("Linalool-", "%", $sdata->description) . "<br>";
-    echo "Terpinolene : " . findTerpene("Terpinolene-", "%", $sdata->description) . "<br>";
+    $item->setBetaPinene(
+            findStr("B Pinene--", "%", $sdata->description)
+    );
+    $item->setBetaMyrcene(
+            findStr("B Myrcene-", "%", $sdata->description)
+    );
+    $item->setBetaCaryophyllene(
+            findStr("B Caryophyllene-", "%", $sdata->description)
+    );
+    $item->setBisabolol(
+            findStr("Bisabolol-", "%", $sdata->description)
+    );
+    $item->setCaryophylleneOxide(
+            findStr("CaryophylleneOxide-", "%", $sdata->description)
+    );
+    $item->setHumulene(
+            findStr("Humulene-", "%", $sdata->description)
+    );
+    $item->setLimonene(
+            findStr("Limonene-", "%", $sdata->description)
+    );
+    $item->setLinalool(
+            findStr("Linalool-", "%", $sdata->description)
+    );
+    $item->setTerpinolene(
+            findStr("Terpinolene-", "%", $sdata->description)
+    );
+    
+    $item->setLineage(
+            getBetween( $sdata->description, "Lineage:", "Batch")
+    );
+    echo "Pinene : " . findStr("Pinene-", "%", $sdata->description) . "<br>";
+    echo "BetaPinene : " . findStr("B Pinene-", "%", $sdata->description) . "<br>";
+    echo "BetaMyrcene : " . findStr("B Myrcene-", "%", $sdata->description) . "<br>";
+    echo "BetaCaryophyllene : " . findStr("B Caryophyllene-", "%", $sdata->description) . "<br>";
+    echo "Bisabolol : " . findStr("Bisabolol-", "%", $sdata->description) . "<br>";
+    echo "CaryophylleneOxide : " . findStr("CaryophylleneOxide-", "%", $sdata->description) . "<br>";
+    echo "Humulene : " . findStr("Humulene-", "%", $sdata->description) . "<br>";
+    echo "Limonene : " . findStr("Limonene-", "%", $sdata->description) . "<br>";
+    echo "Linalool : " . findStr("Linalool-", "%", $sdata->description) . "<br>";
+    echo "Terpinolene : " . findStr("Terpinolene-", "%", $sdata->description) . "<br>";
+    echo "Lineage : " . getBetween( $sdata->description, "Lineage:", "Batch") . "<br>";
+    
+    $item->save();
 }
 
-function findTerpene($start,$end, $string){
+function findStr($start,$end, $string){
     if (preg_match("/{$start}(.*?){$end}/", $string, $match) == 1) {
         return $match[1];
     }
     return "N/A";
 }
+
+function getBetween($content,$start,$end){
+    $r = explode($start, $content);
+    if (isset($r[1])){
+        $r = explode($end, $r[1]);
+        return $r[0];
+    }
+    return '';
+  }
+
 
 
 function processMultiCurls($multicurlarray){
