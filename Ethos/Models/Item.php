@@ -41,8 +41,6 @@ class Item{
     
     public function __construct(){
         $this->_dataContext = new DataContext();
-        $this->_dataContext->init();
-        
     }
     
     public function setName($name){
