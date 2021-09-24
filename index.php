@@ -6,7 +6,10 @@ $initialPage = $t->getData();
 
 //$dataContext = new \Ethos\Models\DataContext();
 //$db = $dataContext->init();
-$db = new \PDO("mysql:host=$this->_serverName;dbname=thedigit_Marijuana", $this->_userName, $this->_password);
+$_serverName = "127.0.0.1";
+$_userName = "thedigit";
+$_password = "mY.q2VDz45k5@O";
+$db = new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password);
 $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
 
