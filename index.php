@@ -128,8 +128,12 @@ foreach($products as $item){
     echo "Linalool : " . findStr("Linalool-", "%", $sdata->description) . "<br>";
     echo "Terpinolene : " . findStr("Terpinolene-", "%", $sdata->description) . "<br>";
     echo "Lineage : " . getBetween( $sdata->description, "Lineage:", "Batch") . "<br>";
+    try{
+        $item->save();
+    } catch (Exception $ex) {
+        echo "EXCEPTION: " . $ex->getMessage();
+    }
     
-    $item->save();
 }
 
 function findStr($start,$end, $string){

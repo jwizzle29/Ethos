@@ -264,7 +264,7 @@ class Item{
                 . "SET Name=:Name, "
                 . "SET Lineage=:Lineage, "
                 . "SET ThcContent=:ThcContent, "
-                . "SET StrainType=:StrainType, ";
+                . "SET StrainType=:StrainType";
         
             $stmt = $this->_dataContext->prepare($saveQuery);
             $stmt->bindParam(":Name", $this->getName());
