@@ -20,7 +20,7 @@ $count = 0;
 $products = [];
 $arrayOfUrls = [];
 foreach($initialPage->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item();
+        $item = new \Ethos\Models\Item($db);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);
@@ -42,7 +42,7 @@ foreach($initialPage->data->filteredProducts->products as $product){
 for($i = 1; $i <= $pages; $i++){
     $data = $t->getData($i);
     foreach($data->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item();
+        $item = new \Ethos\Models\Item($db);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);
