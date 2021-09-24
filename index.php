@@ -75,7 +75,7 @@ $strainInfo = processMultiCurls($arrayOfUrls);
 
 
 foreach($products as $item){
-    echo $item->getName() . "<br>";
+    echo "NAME: " . $item->getName() . "<br>";
     echo $item->getStrainType() . "<br>";
     echo $item->getThcContent() . "<br>";
     echo $productUrl . $item->getCName() . "<br>";
