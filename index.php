@@ -9,8 +9,8 @@ $initialPage = $t->getData();
 $_serverName = "127.0.0.1";
 $_userName = "thedigit";
 $_password = "mY.q2VDz45k5@O";
-//$db = new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password);
-//$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+$db = new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password);
+$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
 
 
@@ -20,7 +20,7 @@ $count = 0;
 $products = [];
 $arrayOfUrls = [];
 foreach($initialPage->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item(new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password));
+        $item = new \Ethos\Models\Item($db);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);
