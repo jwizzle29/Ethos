@@ -280,7 +280,7 @@ class Item{
             $stmt->bindParam(":Terpinolene", $this->getTerpinolene());
             $stmt->bindParam(":Pinene", $this->getPinene());
             $stmt->bindParam(":cName", $this->getCName());
-            $stmt->bindParam(":EightPrice", $this->getEigthPrice);
+            $stmt->bindParam(":EighthPrice", $this->getEigthPrice);
             $stmt->bindParam(":QuarterPrice", $this->getQuarterPrice());
             $stmt->bindParam(":GramPrice", $this->getGramPrice());
             $stmt->bindParam(":Lineage", $this->getLineage());
