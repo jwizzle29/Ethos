@@ -3,6 +3,9 @@ require_once('vendor/autoload.php');
 $productUrl = "https://allentown.ethoscannabis.com/stores/mission-allentown/product/";
 $t = new \Ethos\Api\EthosApi();
 $initialPage = $t->getData();
+$dataContext = new \Ethos\Models\DataContext();
+
+$db = $dataContext->init();
 
 $pages = $initialPage->data->filteredProducts->queryInfo->totalPages;
 $items = $initialPage->data->filteredProducts->queryInfo->totalCount;
@@ -10,7 +13,7 @@ $count = 0;
 $products = [];
 $arrayOfUrls = [];
 foreach($initialPage->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item();
+        $item = new \Ethos\Models\Item($db);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);
@@ -32,7 +35,7 @@ foreach($initialPage->data->filteredProducts->products as $product){
 for($i = 1; $i <= $pages; $i++){
     $data = $t->getData($i);
     foreach($data->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item();
+        $item = new \Ethos\Models\Item($db);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);

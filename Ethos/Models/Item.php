@@ -39,8 +39,8 @@ class Item{
         '1/4' => ""
     ];
     
-    public function __construct(){
-        $this->_dataContext = new DataContext();
+    public function __construct($dataContext){
+        $this->_dataContext = $dataContext;
     }
     
     public function setName($name){
