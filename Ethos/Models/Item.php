@@ -266,7 +266,7 @@ class Item{
                 . "SET ThcContent=:ThcContent, "
                 . "SET StrainType=:StrainType, ";
         
-            $this->_dataContext->_connection->prepare($saveQuery);
+            $this->_dataContext->prepare($saveQuery);
             $this->_dataContext->bindParam(":Name", $this->getName());
             $this->_dataContext->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
             $this->_dataContext->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
