@@ -82,7 +82,8 @@ foreach($products as $item){
     foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
         echo "Description : " .$sdata->description . "<br>";      
     }
-    $item->setDescription($sdata->description);
+    $stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
+    $item->setDescription(strip_tags($stripped));
     $item->setPinene(
             findStr("Pinene-", "%", $sdata->description)
     );
