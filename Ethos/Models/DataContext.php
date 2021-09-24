@@ -13,7 +13,7 @@ class DataContext{
     public $_connection;
     
     public function __construct(){
-        $this->_init();
+        $this->init();
     }
     
     public function init(){
