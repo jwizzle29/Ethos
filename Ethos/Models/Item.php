@@ -293,6 +293,6 @@ class Item{
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
-        
+        $this->_dataContext->_connection = null;
     }
 }
