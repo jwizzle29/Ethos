@@ -8,8 +8,27 @@ namespace Ethos\Api;
 
 class EthosApi{
     
+    private $_pages;
+    private $_items;
+    
     public function __construct(){
         
+    }
+    
+    public function setPages($pages){
+        $this->_pages = $pages;
+    }
+    
+    public function getPages(){
+        return $this->_pages;
+    }
+    
+    public function setItems($items){
+        $this->_items = $items;
+    }
+    
+    public function getItems(){
+        return $this->_items;
     }
     
     public function EthosCurl($url){
@@ -23,7 +42,7 @@ class EthosApi{
         return $data;
     }
     
-    public function getData(){
+    public function getData($page = 0){
         $options = [
             "includeCannabinoids" => false,
             "showAllSpecialProducts" => false,
@@ -41,7 +60,7 @@ class EthosApi{
             "bypassOnlineThresholds"=>false,
             "isKioskMenu"=>false
             ],
-            "page" => 0,
+            "page" => $page,
             "perPage" => 50
         ];
 
