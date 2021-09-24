@@ -258,11 +258,11 @@ class Item{
                 . "Terpinolene=:Terpinolene, "
                 . "cName=:cName, "
                 . "Description=:Description, "
-                . "EightPrice=:EighthPrice, "
-                . "QuarterPrice=:QuarterPrice, "
-                . "GramPrice=:GramPrice, "
+                //. "EightPrice=:EighthPrice, "
+                //. "QuarterPrice=:QuarterPrice, "
+                //. "GramPrice=:GramPrice, "
                 . "Name=:Name, "
-                . "Lineage=:Lineage, "
+                //. "Lineage=:Lineage, "
                 . "ThcContent=:ThcContent, "
                 . "StrainType=:StrainType";
         
@@ -280,10 +280,10 @@ class Item{
             $stmt->bindParam(":Terpinolene", $this->getTerpinolene());
             $stmt->bindParam(":Pinene", $this->getPinene());
             $stmt->bindParam(":cName", $this->getCName());
-            $stmt->bindParam(":EighthPrice", $this->getEigthPrice);
-            $stmt->bindParam(":QuarterPrice", $this->getQuarterPrice());
-            $stmt->bindParam(":GramPrice", $this->getGramPrice());
-            $stmt->bindParam(":Lineage", $this->getLineage());
+            //$stmt->bindParam(":EighthPrice", $this->getEigthPrice);
+            //$stmt->bindParam(":QuarterPrice", $this->getQuarterPrice());
+            //$stmt->bindParam(":GramPrice", $this->getGramPrice());
+            //$stmt->bindParam(":Lineage", $this->getLineage());
             $stmt->bindParam(":ThcContent", $this->getThcContent());
             $stmt->bindParam(":StrainType", $this->getStrainType());
 
