@@ -39,10 +39,8 @@ class Item{
         '1/4' => ""
     ];
     
-    public function __construct(){
-        $this->_dataContext = new DataContext();
-        $this->_dataContext->init();
-        
+    public function __construct($datacontext){
+        $this->_dataContext = $datacontext;
     }
     
     public function setName($name){
@@ -268,31 +266,31 @@ class Item{
                 . "SET ThcContent=:ThcContent, "
                 . "SET StrainType=:StrainType, ";
         
-            $this->_dataContext->_connection->prepare($saveQuery);
-            $this->_dataContext->_connection->bindParam(":Name", $this->getName());
-            $this->_dataContext->_connection->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
-            $this->_dataContext->_connection->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
-            $this->_dataContext->_connection->bindParam(":BetaPinene", $this->getBetaPinene());
-            $this->_dataContext->_connection->bindParam(":Bisabolol", $this->getBisabolol);
-            $this->_dataContext->_connection->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
-            $this->_dataContext->_connection->bindParam(":Humulene", $this->getHumulene());
-            $this->_dataContext->_connection->bindParam(":Limonene", $this->getLimonene());
-            $this->_dataContext->_connection->bindParam(":Linalool", $this->getLinalool());
-            $this->_dataContext->_connection->bindParam(":Terpinolene", $this->getTerpinolene());
-            $this->_dataContext->_connection->bindParam(":Pinene", $this->getPinene());
-            $this->_dataContext->_connection->bindParam(":cName", $this->getCName());
-            $this->_dataContext->_connection->bindParam(":Description", $this->getDescription());
-            $this->_dataContext->_connection->bindParam(":EightPrice", $this->getEigthPrice);
-            $this->_dataContext->_connection->bindParam(":QuarterPrice", $this->getQuarterPrice());
-            $this->_dataContext->_connection->bindParam(":GramPrice", $this->getGramPrice());
-            $this->_dataContext->_connection->bindParam(":Lineage", $this->getLineage());
-            $this->_dataContext->_connection->bindParam(":ThcContent", $this->getThcContent());
-            $this->_dataContext->_connection->bindParam(":StrainType", $this->getStrainType());
+            $this->_dataContext->prepare($saveQuery);
+            $this->_dataContext->bindParam(":Name", $this->getName());
+            $this->_dataContext->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
+            $this->_dataContext->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
+            $this->_dataContext->bindParam(":BetaPinene", $this->getBetaPinene());
+            $this->_dataContext->bindParam(":Bisabolol", $this->getBisabolol);
+            $this->_dataContext->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
+            $this->_dataContext->bindParam(":Humulene", $this->getHumulene());
+            $this->_dataContext->bindParam(":Limonene", $this->getLimonene());
+            $this->_dataContext->bindParam(":Linalool", $this->getLinalool());
+            $this->_dataContext->bindParam(":Terpinolene", $this->getTerpinolene());
+            $this->_dataContext->bindParam(":Pinene", $this->getPinene());
+            $this->_dataContext->bindParam(":cName", $this->getCName());
+            $this->_dataContext->bindParam(":EightPrice", $this->getEigthPrice);
+            $this->_dataContext->bindParam(":QuarterPrice", $this->getQuarterPrice());
+            $this->_dataContext->bindParam(":GramPrice", $this->getGramPrice());
+            $this->_dataContext->bindParam(":Lineage", $this->getLineage());
+            $this->_dataContext->bindParam(":ThcContent", $this->getThcContent());
+            $this->_dataContext->bindParam(":StrainType", $this->getStrainType());
 
-            $this->_dataContext->_connection->execute();
+            $this->_dataContext->execute();
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
+        $this->_dataContext = null;
         
     }
 }

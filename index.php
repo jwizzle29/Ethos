@@ -4,13 +4,18 @@ $productUrl = "https://allentown.ethoscannabis.com/stores/mission-allentown/prod
 $t = new \Ethos\Api\EthosApi();
 $initialPage = $t->getData();
 
+$dataContext = new \Ethos\Models\DataContext();
+$connection = $dataContext->_connection;
+
+
+
 $pages = $initialPage->data->filteredProducts->queryInfo->totalPages;
 $items = $initialPage->data->filteredProducts->queryInfo->totalCount;
 $count = 0;
 $products = [];
 $arrayOfUrls = [];
 foreach($initialPage->data->filteredProducts->products as $product){
-        $item = new \Ethos\Models\Item($db);
+        $item = new \Ethos\Models\Item($connection);
         $item->setName($product->Name);
         $item->setThcContent($product->THCContent->range[0]);
         $item->setStrainType($product->strainType);
