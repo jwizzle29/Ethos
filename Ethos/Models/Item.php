@@ -31,7 +31,6 @@ class Item{
         'terpinolene' => ""
     ];
     private $_dataContext;
-    public $Connection;
     private $_type;
     private $_thcContent;
     private $_prices = [
@@ -42,11 +41,8 @@ class Item{
     
     public function __construct(){
         $this->_dataContext = new DataContext();
-        $this->Connection = $this->_dataContext->init();
-    }
-    
-    public function getConnection(){
-        return $this->Connection;
+        $this->_dataContext->init();
+        
     }
     
     public function setName($name){
@@ -272,31 +268,31 @@ class Item{
                 . "SET ThcContent=:ThcContent, "
                 . "SET StrainType=:StrainType, ";
         
-            $this->Connection->prepare($saveQuery);
-            $this->Connection->bindParam(":Name", $this->getName());
-            $this->Connection->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
-            $this->Connection->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
-            $this->Connection->bindParam(":BetaPinene", $this->getBetaPinene());
-            $this->Connection->bindParam(":Bisabolol", $this->getBisabolol);
-            $this->Connection->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
-            $this->Connection->bindParam(":Humulene", $this->getHumulene());
-            $this->Connection->bindParam(":Limonene", $this->getLimonene());
-            $this->Connection->bindParam(":Linalool", $this->getLinalool());
-            $this->Connection->bindParam(":Terpinolene", $this->getTerpinolene());
-            $this->Connection->bindParam(":Pinene", $this->getPinene());
-            $this->Connection->bindParam(":cName", $this->getCName());
-            $this->Connection->bindParam(":Description", $this->getDescription());
-            $this->Connection->bindParam(":EightPrice", $this->getEigthPrice);
-            $this->Connection->bindParam(":QuarterPrice", $this->getQuarterPrice());
-            $this->Connection->bindParam(":GramPrice", $this->getGramPrice());
-            $this->Connection->bindParam(":Lineage", $this->getLineage());
-            $this->Connection->bindParam(":ThcContent", $this->getThcContent());
-            $this->Connection->bindParam(":StrainType", $this->getStrainType());
+            $this->_dataContext->_connection->prepare($saveQuery);
+            $this->_dataContext->_connection->bindParam(":Name", $this->getName());
+            $this->_dataContext->_connection->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
+            $this->_dataContext->_connection->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
+            $this->_dataContext->_connection->bindParam(":BetaPinene", $this->getBetaPinene());
+            $this->_dataContext->_connection->bindParam(":Bisabolol", $this->getBisabolol);
+            $this->_dataContext->_connection->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
+            $this->_dataContext->_connection->bindParam(":Humulene", $this->getHumulene());
+            $this->_dataContext->_connection->bindParam(":Limonene", $this->getLimonene());
+            $this->_dataContext->_connection->bindParam(":Linalool", $this->getLinalool());
+            $this->_dataContext->_connection->bindParam(":Terpinolene", $this->getTerpinolene());
+            $this->_dataContext->_connection->bindParam(":Pinene", $this->getPinene());
+            $this->_dataContext->_connection->bindParam(":cName", $this->getCName());
+            $this->_dataContext->_connection->bindParam(":Description", $this->getDescription());
+            $this->_dataContext->_connection->bindParam(":EightPrice", $this->getEigthPrice);
+            $this->_dataContext->_connection->bindParam(":QuarterPrice", $this->getQuarterPrice());
+            $this->_dataContext->_connection->bindParam(":GramPrice", $this->getGramPrice());
+            $this->_dataContext->_connection->bindParam(":Lineage", $this->getLineage());
+            $this->_dataContext->_connection->bindParam(":ThcContent", $this->getThcContent());
+            $this->_dataContext->_connection->bindParam(":StrainType", $this->getStrainType());
 
-            $this->Connection->_connection->execute();
+            $this->_dataContext->_connection->execute();
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
-        $this->Connection = null;
+        
     }
 }
