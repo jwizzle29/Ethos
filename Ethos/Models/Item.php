@@ -266,27 +266,27 @@ class Item{
                 . "SET ThcContent=:ThcContent, "
                 . "SET StrainType=:StrainType, ";
         
-            $this->_dataContext->prepare($saveQuery);
-            $this->_dataContext->bindParam(":Name", $this->getName());
-            $this->_dataContext->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
-            $this->_dataContext->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
-            $this->_dataContext->bindParam(":BetaPinene", $this->getBetaPinene());
-            $this->_dataContext->bindParam(":Bisabolol", $this->getBisabolol);
-            $this->_dataContext->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
-            $this->_dataContext->bindParam(":Humulene", $this->getHumulene());
-            $this->_dataContext->bindParam(":Limonene", $this->getLimonene());
-            $this->_dataContext->bindParam(":Linalool", $this->getLinalool());
-            $this->_dataContext->bindParam(":Terpinolene", $this->getTerpinolene());
-            $this->_dataContext->bindParam(":Pinene", $this->getPinene());
-            $this->_dataContext->bindParam(":cName", $this->getCName());
-            $this->_dataContext->bindParam(":EightPrice", $this->getEigthPrice);
-            $this->_dataContext->bindParam(":QuarterPrice", $this->getQuarterPrice());
-            $this->_dataContext->bindParam(":GramPrice", $this->getGramPrice());
-            $this->_dataContext->bindParam(":Lineage", $this->getLineage());
-            $this->_dataContext->bindParam(":ThcContent", $this->getThcContent());
-            $this->_dataContext->bindParam(":StrainType", $this->getStrainType());
+            $stmt = $this->_dataContext->prepare($saveQuery);
+            $stmt->bindParam(":Name", $this->getName());
+            $stmt->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
+            $stmt->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
+            $stmt->bindParam(":BetaPinene", $this->getBetaPinene());
+            $stmt->bindParam(":Bisabolol", $this->getBisabolol);
+            $stmt->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
+            $stmt->bindParam(":Humulene", $this->getHumulene());
+            $stmt->bindParam(":Limonene", $this->getLimonene());
+            $stmt->bindParam(":Linalool", $this->getLinalool());
+            $stmt->bindParam(":Terpinolene", $this->getTerpinolene());
+            $stmt->bindParam(":Pinene", $this->getPinene());
+            $stmt->bindParam(":cName", $this->getCName());
+            $stmt->bindParam(":EightPrice", $this->getEigthPrice);
+            $stmt->bindParam(":QuarterPrice", $this->getQuarterPrice());
+            $stmt->bindParam(":GramPrice", $this->getGramPrice());
+            $stmt->bindParam(":Lineage", $this->getLineage());
+            $stmt->bindParam(":ThcContent", $this->getThcContent());
+            $stmt->bindParam(":StrainType", $this->getStrainType());
 
-            $this->_dataContext->execute();
+            $stmt->execute();
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
