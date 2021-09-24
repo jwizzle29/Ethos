@@ -1,40 +1,125 @@
 <?php
 require_once('vendor/autoload.php');
-
+$productUrl = "https://allentown.ethoscannabis.com/stores/mission-allentown/product/";
 $t = new \Ethos\Api\EthosApi();
 $initialPage = $t->getData();
 
 $pages = $initialPage->data->filteredProducts->queryInfo->totalPages;
 $items = $initialPage->data->filteredProducts->queryInfo->totalCount;
 $count = 0;
-echo "Item count " . $items . "<br>";
-foreach($initialPage->data->filteredProducts->products as $product){
-        array_push($products, $product->Name);
-}
-echo "num pages " . $pages;
 $products = [];
+$arrayOfUrls = [];
 foreach($initialPage->data->filteredProducts->products as $product){
-        array_push($products, $product->Name);
+        $item = new \Ethos\Models\Item();
+        $item->setName($product->Name);
+        $item->setThcContent($product->THCContent->range[0]);
+        $item->setStrainType($product->strainType);
+        $item->setCName($product->cName);
+        $strainData = $t->getStrainData($item->getCName());
+        //echo "STRAIN DATA: " . $strainData . "<br>";
+        //array_push($arrayOfUrls[$product->Name], $strainData);
+        $arrayOfUrls[$item->getCName()] = $strainData;
+        /*foreach($strainData->data->filteredProducts->products as $sdata){
+            $item->setDescription($sdata->description);
+        }
+        if (preg_match('/Lineage:-(.*?)-Batch/', $sdata->description, $match) == 1) {
+            $item->setLineage($match[1]);
+        }*/
+        
+        $products[$item->getCName()] = $item;
+        //array_push($products, $item);
 }
 for($i = 1; $i <= $pages; $i++){
-    echo "reading Page " . $i . "<br>";
     $data = $t->getData($i);
     foreach($data->data->filteredProducts->products as $product){
-        array_push($products, $product->Name);
+        $item = new \Ethos\Models\Item();
+        $item->setName($product->Name);
+        $item->setThcContent($product->THCContent->range[0]);
+        $item->setStrainType($product->strainType);
+        $item->setCName($product->cName);
+        $strainData = $t->getStrainData($item->getCName());
+        //echo "key: " .$item->getCName() . " >> STRAIN DATA: " . $strainData . "<br>";
+        $arrayOfUrls[$item->getCName()] = $strainData;
+        //print_r($multiCurlArray);exit;
+        /*foreach($strainData->data->filteredProducts->products as $sdata){
+            $item->setDescription($sdata->description);
+        }
+        if (preg_match('/Lineage:-(.*?)-Batch/', $sdata->description, $match) == 1) {
+            $item->setLineage($match[1]);
+        }*/
+        //array_push($products, $item);
+        $products[$item->getCName()] = $item;
     }
 }
 
-print_r($products);
 
-$servername = "127.0.0.1";
-$username = "thedigit";
-$password = "mY.q2VDz45k5@O";
 
-try {
-  $conn = new PDO("mysql:host=$servername;dbname=thedigit_Marijuana", $username, $password);
-  // set the PDO error mode to exception
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  echo "Connected successfully";
-} catch(PDOException $e) {
-  echo "Connection failed: " . $e->getMessage();
+//foreach($arrayOfUrls as $idx => $value){
+ //   echo $value . "<br>";
+//}
+$strainInfo = processMultiCurls($arrayOfUrls);
+//print_r($strainInfo);
+//foreach($strainInfo as $i => $value){
+//    $products[$i->]
+//}
+
+
+foreach($products as $item){
+    echo $item->getName() . "<br>";
+    echo $item->getStrainType() . "<br>";
+    echo $item->getThcContent() . "<br>";
+    echo $productUrl . $item->getCName() . "<br>";
+    foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
+        echo "Description : " .$sdata->description . "<br>";      
+    }
+    $item->setDescription($sdata->description);
+    $item->setPinene(
+            findTerpene("Pinene-", "%", $sdata->description)
+    );
+    echo "Pinene : " . findTerpene("Pinene-", "%", $sdata->description) . "<br>";
+    echo "BetaPinene : " . findTerpene("B Pinene-", "%", $sdata->description) . "<br>";
+    echo "BetaMyrcene : " . findTerpene("B Myrcene-", "%", $sdata->description) . "<br>";
+    echo "BetaCaryophyllene : " . findTerpene("B Caryophyllene-", "%", $sdata->description) . "<br>";
+    echo "Bisabolol : " . findTerpene("Bisabolol-", "%", $sdata->description) . "<br>";
+    echo "CaryophylleneOxide : " . findTerpene("CaryophylleneOxide-", "%", $sdata->description) . "<br>";
+    echo "Humulene : " . findTerpene("Humulene-", "%", $sdata->description) . "<br>";
+    echo "Limonene : " . findTerpene("Limonene-", "%", $sdata->description) . "<br>";
+    echo "Linalool : " . findTerpene("Linalool-", "%", $sdata->description) . "<br>";
+    echo "Terpinolene : " . findTerpene("Terpinolene-", "%", $sdata->description) . "<br>";
+}
+
+function findTerpene($start,$end, $string){
+    if (preg_match("/{$start}(.*?){$end}/", $string, $match) == 1) {
+        return $match[1];
+    }
+    return "N/A";
+}
+
+
+function processMultiCurls($multicurlarray){
+    $mh = curl_multi_init();
+    $kk = [];
+    
+    foreach($multicurlarray as $idx => $value){
+        $kk[$idx] = curl_init();
+        curl_setopt($kk[$idx], CURLOPT_URL, $value);
+        curl_setopt($kk[$idx], CURLOPT_RETURNTRANSFER, 1);
+        curl_multi_add_handle($mh,$kk[$idx]);
+    }
+    $running = null;
+    do {
+      curl_multi_exec($mh, $running);
+    } while ($running);
+    
+    $responses = [];
+    
+    foreach($multicurlarray as $idx => $value){
+        curl_multi_remove_handle($mh, $kk[$idx]);
+    }
+    
+    foreach($multicurlarray as $idx => $value){
+        $responses[$idx] = json_decode(curl_multi_getcontent($kk[$idx]));
+    }
+    curl_multi_close($mh);
+    return $responses;
 }

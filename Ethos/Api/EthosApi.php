@@ -47,18 +47,18 @@ class EthosApi{
             "includeCannabinoids" => false,
             "showAllSpecialProducts" => false,
             "productsFilter" => [
-            "dispensaryId" => "4bZmK4MfjoypZ8MdN",
-            "pricingType"=>"med",
-            "strainTypes"=>[],
-            "subcategories"=>[],
-            "Status"=>"Active",
-            "removeProductsBelowOptionThresholds"=>true,
-            "types"=>["Flower"],
-            "useCache"=>false,
-            "sortDirection"=>1,
-            "sortBy"=>"weight",
-            "bypassOnlineThresholds"=>false,
-            "isKioskMenu"=>false
+                "dispensaryId" => "4bZmK4MfjoypZ8MdN",
+                "pricingType"=>"med",
+                "strainTypes"=>[],
+                "subcategories"=>[],
+                "Status"=>"Active",
+                "removeProductsBelowOptionThresholds"=>true,
+                "types"=>["Flower"],
+                "useCache"=>false,
+                "sortDirection"=>1,
+                "sortBy"=>"weight",
+                "bypassOnlineThresholds"=>false,
+                "isKioskMenu"=>false
             ],
             "page" => $page,
             "perPage" => 50
@@ -73,14 +73,61 @@ class EthosApi{
 
         $url = 'https://allentown.ethoscannabis.com/graphql?operationName=FilteredProducts&variables=' . json_encode($options) . '&extensions=' . json_encode($extensions);
 
-        $ch = curl_init();
+        /*$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         $data = json_decode($output);
-        curl_close($ch);
+        curl_close($ch);*/
         
         return $this->EthosCurl($url);
+    }
+    
+    public function getStrainData($cname){
+        /*
+         {
+          "includeTerpenes":true,
+          "includeCannabinoids":true,
+         * "productsFilter":
+         *      {
+         *          "cName":"natural-selections-mint-mango-manchego-unchained-pheno-3-5g",
+         *          "dispensaryId":"4bZmK4MfjoypZ8MdN",
+         *          "removeProductsBelowOptionThresholds":true,
+         *          "isKioskMenu":false,
+         *          "bypassKioskThresholds":false,
+         *          "bypassOnlineThresholds":true
+         *      }
+         }
+         * &extensions=
+         * {"persistedQuery":
+         *      {
+         *          "version":1,
+         *          "sha256Hash":"9bfe5c55e7c45016732619d6dc6e378a02fd50caa18a6b2f02f2dd07adb034ec"
+         *      }
+         * }
+         */
+        
+        $options = [
+            "includeCannabinoids" => false,
+            "showAllSpecialProducts" => false,
+            "productsFilter" => [
+                "cName"=>$cname,
+                "dispensaryId"=>"4bZmK4MfjoypZ8MdN",
+                "removeProductsBelowOptionThresholds"=>true,
+                "isKioskMenu"=>false,
+                "bypassKioskThresholds"=>false,
+                "bypassOnlineThresholds"=>true
+            ],
+        ];
+
+        $extensions = [
+            "persistedQuery" => [
+                "version" => 1,
+                "sha256Hash" => "9bfe5c55e7c45016732619d6dc6e378a02fd50caa18a6b2f02f2dd07adb034ec"
+            ]
+        ];
+        $url = 'https://allentown.ethoscannabis.com/graphql?operationName=FilteredProducts&variables=' . json_encode($options) . '&extensions=' . json_encode($extensions);
+        return $url;//$this->EthosCurl($url);
     }
 }
 
