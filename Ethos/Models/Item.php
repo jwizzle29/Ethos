@@ -268,6 +268,7 @@ class Item{
         
             $stmt = $this->_dataContext->prepare($saveQuery);
             $stmt->bindParam(":Name", $this->getName());
+            $stmt->bindParam(":Description", $this->getDescription());
             $stmt->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
             $stmt->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
             $stmt->bindParam(":BetaPinene", $this->getBetaPinene());
