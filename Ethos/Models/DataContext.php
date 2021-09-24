@@ -19,7 +19,7 @@ class DataContext{
     public function init(){
         try{
             $this->_connection = new \PDO("mysql:host=$this->_serverName;dbname=thedigit_Marijuana", $this->_userName, $this->_password);
-            $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }catch(Exception $e){
             echo "Connection failed: " . $e->getMessage();
         } 

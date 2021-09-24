@@ -35,7 +35,7 @@ class Item{
     
     public function __construct(){
         $this->_dataContext = new DataContext();
-        $this->_dataContext->init();
+        //$this->_dataContext->init();
         
     }
     
