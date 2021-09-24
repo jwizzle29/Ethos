@@ -288,6 +288,7 @@ class Item{
             $stmt->bindParam(":StrainType", $this->getStrainType());
 
             $stmt->execute();
+            $stmt->debugDumpParams();
         } catch (Exception $e) {
             echo "Exception : " . $e->getMessage();
         }
