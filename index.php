@@ -51,14 +51,26 @@ foreach($products as $item){
     echo $item->getThcContent() . "<br>";
     echo $productUrl . $item->getCName() . "<br>";
     foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
-        echo "Description : " .$sdata->description . "<br>";  
+        //echo "Description : " .$sdata->description . "<br>";  
         $stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
         $item->setDescription(strip_tags($stripped));
+        //echo "TERP DATA: <br><pre>";
+        //print_r($sdata->terpenes);exit;
+        foreach($sdata->terpenes as $terpData){
+            $terpName = str_replace(" ", "", $terpData->libraryTerpene->name);
+            $methodName = "set{$terpName}";
+            echo $methodName . "<br>";
+            $item->$methodName($terpData->value);
+            //echo $terpData->libraryTerpene->name . "<br>";
+            //echo $terpData->value . "<br>";
+        }
     }
     
     $desription = $item->getDescription();
     
-    $item->setPinene(
+    
+    
+    /*$item->setPinene(
             findStr("Pinene-", "%", $desription)
     );
     $item->setBetaPinene(
@@ -87,7 +99,7 @@ foreach($products as $item){
     );
     $item->setTerpinolene(
             findStr("Terpinolene-", "%", $desription)
-    );
+    );*/
     
     $priceArray = [
       '1g' => "",
@@ -115,7 +127,7 @@ foreach($products as $item){
     $item->setLineage(
             $lineageStr
     );
-    echo "Pinene : " . findStr("Pinene-", "%", $desription) . "<br>";
+    /*echo "Pinene : " . findStr("Pinene-", "%", $desription) . "<br>";
     echo "BetaPinene : " . findStr("B Pinene-", "%", $desription) . "<br>";
     echo "BetaMyrcene : " . findStr("B Myrcene-", "%", $desription) . "<br>";
     echo "BetaCaryophyllene : " . findStr("B Caryophyllene-", "%", $desription) . "<br>";
@@ -129,7 +141,7 @@ foreach($products as $item){
     echo "Lineage1 : " . $item->getLineage1() . "<br>";
     echo "Lineage2 : " . $item->getLineage2() . "<br>";
     echo "Lineage3 : " . $item->getLineage3() . "<br>";
-    echo "Lineage4 : " . $item->getLineage4() . "<br>";
+    echo "Lineage4 : " . $item->getLineage4() . "<br>";*/
     try{
         $item->save();
     } catch (Exception $ex) {

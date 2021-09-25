@@ -108,6 +108,7 @@ class EthosApi{
          */
         
         $options = [
+            "includeTerpenes" => true,
             "includeCannabinoids" => false,
             "showAllSpecialProducts" => false,
             "productsFilter" => [
