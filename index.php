@@ -59,7 +59,7 @@ foreach($products as $item){
         foreach($sdata->terpenes as $terpData){
             $terpName = str_replace(" ", "", $terpData->libraryTerpene->name);
             $methodName = "set{$terpName}";
-            echo $methodName . "<br>";
+            echo $methodName . "({$terpData->value})<br>";
             $item->$methodName($terpData->value);
             //echo $terpData->libraryTerpene->name . "<br>";
             //echo $terpData->value . "<br>";
