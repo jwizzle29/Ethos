@@ -57,10 +57,16 @@ foreach($products as $item){
         //echo "TERP DATA: <br><pre>";
         //print_r($sdata->terpenes);exit;
         foreach($sdata->terpenes as $terpData){
+            $value = "";
+            if($terpData->value == ""){
+                $value = null;
+            }else{
+                $value = $terpData->value;
+            }
             $terpName = str_replace(" ", "", $terpData->libraryTerpene->name);
             $methodName = "set{$terpName}";
-            echo $methodName . "({$terpData->value})<br>";
-            $item->$methodName($terpData->value);
+            echo $methodName . "({$value})<br>";
+            $item->$methodName($value);
             //echo $terpData->libraryTerpene->name . "<br>";
             //echo $terpData->value . "<br>";
         }
