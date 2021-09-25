@@ -281,8 +281,8 @@ class Item{
             $stmt->bindParam(":BetaCaryophyllene", $this->getBetaCaryophyllene());
             $stmt->bindParam(":BetaMyrcene", $this->getBetaMyrcene());
             $stmt->bindParam(":BetaPinene", $this->getBetaPinene());
-            $stmt->bindParam(":Bisabolol", $this->getBisabolol);
-            $stmt->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide);
+            $stmt->bindParam(":Bisabolol", $this->getBisabolol());
+            $stmt->bindParam(":CaryophylleneOxide", $this->getCaryophylleneOxide());
             $stmt->bindParam(":Humulene", $this->getHumulene());
             $stmt->bindParam(":Limonene", $this->getLimonene());
             $stmt->bindParam(":Linalool", $this->getLinalool());

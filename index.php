@@ -58,7 +58,7 @@ foreach($products as $item){
         $item->setDescription(strip_tags($stripped));
         //echo "TERP DATA: <br><pre>";
         //print_r($sdata->terpenes);exit;
-        if($sdata->terpenes != ""){
+        if(!empty($sdata->terpenes)){
             foreach($sdata->terpenes as $terpData){
                 $value = "";
                 if($terpData->value == ""){
@@ -70,8 +70,6 @@ foreach($products as $item){
                 $methodName = "set{$terpName}";
                 echo $methodName . "({$value})<br>";
                 $item->$methodName($value);
-                //echo $terpData->libraryTerpene->name . "<br>";
-                //echo $terpData->value . "<br>";
             }
         }else{
             $item->setPinene(
