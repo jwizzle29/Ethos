@@ -6,11 +6,11 @@ $initialPage = $t->getData();
 
 //$dataContext = new \Ethos\Models\DataContext();
 //$db = $dataContext->init();
-$_serverName = "127.0.0.1";
+/*$_serverName = "127.0.0.1";
 $_userName = "thedigit";
 $_password = "mY.q2VDz45k5@O";
 $db = new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password);
-$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);*/
 
 
 
@@ -26,18 +26,8 @@ foreach($initialPage->data->filteredProducts->products as $product){
         $item->setStrainType($product->strainType);
         $item->setCName($product->cName);
         $strainData = $t->getStrainData($item->getCName());
-        //echo "STRAIN DATA: " . $strainData . "<br>";
-        //array_push($arrayOfUrls[$product->Name], $strainData);
-        $arrayOfUrls[$item->getCName()] = $strainData;
-        /*foreach($strainData->data->filteredProducts->products as $sdata){
-            $item->setDescription($sdata->description);
-        }
-        if (preg_match('/Lineage:-(.*?)-Batch/', $sdata->description, $match) == 1) {
-            $item->setLineage($match[1]);
-        }*/
-        
+        $arrayOfUrls[$item->getCName()] = $strainData;      
         $products[$item->getCName()] = $item;
-        //array_push($products, $item);
 }
 for($i = 1; $i <= $pages; $i++){
     $data = $t->getData($i);
@@ -48,31 +38,12 @@ for($i = 1; $i <= $pages; $i++){
         $item->setStrainType($product->strainType);
         $item->setCName($product->cName);
         $strainData = $t->getStrainData($item->getCName());
-        //echo "key: " .$item->getCName() . " >> STRAIN DATA: " . $strainData . "<br>";
         $arrayOfUrls[$item->getCName()] = $strainData;
-        //print_r($multiCurlArray);exit;
-        /*foreach($strainData->data->filteredProducts->products as $sdata){
-            $item->setDescription($sdata->description);
-        }
-        if (preg_match('/Lineage:-(.*?)-Batch/', $sdata->description, $match) == 1) {
-            $item->setLineage($match[1]);
-        }*/
-        //array_push($products, $item);
         $products[$item->getCName()] = $item;
     }
 }
 
-
-
-//foreach($arrayOfUrls as $idx => $value){
- //   echo $value . "<br>";
-//}
 $strainInfo = processMultiCurls($arrayOfUrls);
-//print_r($strainInfo);
-//foreach($strainInfo as $i => $value){
-//    $products[$i->]
-//}
-
 
 foreach($products as $item){
     echo "NAME: " . $item->getName() . "<br>";
@@ -80,57 +51,87 @@ foreach($products as $item){
     echo $item->getThcContent() . "<br>";
     echo $productUrl . $item->getCName() . "<br>";
     foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
-        echo "Description : " .$sdata->description . "<br>";      
+        echo "Description : " .$sdata->description . "<br>";  
+        $stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
+        $item->setDescription(strip_tags($stripped));
     }
-    //$stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
-    //$item->setDescription(strip_tags($stripped));
+    
+    $desription = $item->getDescription();
+    
     $item->setPinene(
-            findStr("Pinene-", "%", $sdata->description)
+            findStr("Pinene-", "%", $desription)
     );
     $item->setBetaPinene(
-            findStr("B Pinene--", "%", $sdata->description)
+            findStr("B Pinene--", "%", $desription)
     );
     $item->setBetaMyrcene(
-            findStr("B Myrcene-", "%", $sdata->description)
+            findStr("B Myrcene-", "%", $desription)
     );
     $item->setBetaCaryophyllene(
-            findStr("B Caryophyllene-", "%", $sdata->description)
+            findStr("B Caryophyllene-", "%", $desription)
     );
     $item->setBisabolol(
-            findStr("Bisabolol-", "%", $sdata->description)
+            findStr("Bisabolol-", "%", $desription)
     );
     $item->setCaryophylleneOxide(
-            findStr("CaryophylleneOxide-", "%", $sdata->description)
+            findStr("CaryophylleneOxide-", "%", $desription)
     );
     $item->setHumulene(
-            findStr("Humulene-", "%", $sdata->description)
+            findStr("Humulene-", "%", $desription)
     );
     $item->setLimonene(
-            findStr("Limonene-", "%", $sdata->description)
+            findStr("Limonene-", "%", $desription)
     );
     $item->setLinalool(
-            findStr("Linalool-", "%", $sdata->description)
+            findStr("Linalool-", "%", $desription)
     );
     $item->setTerpinolene(
-            findStr("Terpinolene-", "%", $sdata->description)
+            findStr("Terpinolene-", "%", $desription)
     );
     
+    $priceArray = [
+      '1g' => "",
+      '1/8oz' => "",
+      '1/4oz' => ""
+    ];
+    
+    foreach($sdata->Options as $opt){
+        foreach($sdata->Prices as $price){
+            $priceArray[$opt] = $price;
+        }
+    }
+    
+    $item->setGramPrice($priceArray['1g']);
+    $item->setGramPrice($priceArray['1/8oz']);
+    $item->setGramPrice($priceArray['1/4oz']);
+    
+    $lineageStr = getBetween($desription, "Lineage:", "Batch");
+    $e = explode($lineageStr, "x");
+    
+    for($i = 1; $i <= count($e);$i++){
+        $methodName = "setLineage$i";
+        $item->$methodName($e[$i]);
+    }
     $item->setLineage(
-            getBetween( $sdata->description, "Lineage:", "Batch")
+            $lineageStr
     );
-    echo "Pinene : " . findStr("Pinene-", "%", $sdata->description) . "<br>";
-    echo "BetaPinene : " . findStr("B Pinene-", "%", $sdata->description) . "<br>";
-    echo "BetaMyrcene : " . findStr("B Myrcene-", "%", $sdata->description) . "<br>";
-    echo "BetaCaryophyllene : " . findStr("B Caryophyllene-", "%", $sdata->description) . "<br>";
-    echo "Bisabolol : " . findStr("Bisabolol-", "%", $sdata->description) . "<br>";
-    echo "CaryophylleneOxide : " . findStr("CaryophylleneOxide-", "%", $sdata->description) . "<br>";
-    echo "Humulene : " . findStr("Humulene-", "%", $sdata->description) . "<br>";
-    echo "Limonene : " . findStr("Limonene-", "%", $sdata->description) . "<br>";
-    echo "Linalool : " . findStr("Linalool-", "%", $sdata->description) . "<br>";
-    echo "Terpinolene : " . findStr("Terpinolene-", "%", $sdata->description) . "<br>";
-    echo "Lineage : " . getBetween( $sdata->description, "Lineage:", "Batch") . "<br>";
+    echo "Pinene : " . findStr("Pinene-", "%", $desription) . "<br>";
+    echo "BetaPinene : " . findStr("B Pinene-", "%", $desription) . "<br>";
+    echo "BetaMyrcene : " . findStr("B Myrcene-", "%", $desription) . "<br>";
+    echo "BetaCaryophyllene : " . findStr("B Caryophyllene-", "%", $desription) . "<br>";
+    echo "Bisabolol : " . findStr("Bisabolol-", "%", $desription) . "<br>";
+    echo "CaryophylleneOxide : " . findStr("CaryophylleneOxide-", "%", $desription) . "<br>";
+    echo "Humulene : " . findStr("Humulene-", "%", $desription) . "<br>";
+    echo "Limonene : " . findStr("Limonene-", "%", $desription) . "<br>";
+    echo "Linalool : " . findStr("Linalool-", "%", $desription) . "<br>";
+    echo "Terpinolene : " . findStr("Terpinolene-", "%", $desription) . "<br>";
+    echo "Lineage : " . getBetween($desription, "Lineage:", "Batch") . "<br>";
+    echo "Lineage1 : " . $item->getLineage1() . "<br>";
+    echo "Lineage2 : " . $item->getLineage2() . "<br>";
+    echo "Lineage3 : " . $item->getLineage3() . "<br>";
+    echo "Lineage4 : " . $item->getLineage4() . "<br>";
     try{
-        $item->save();
+        //$item->save();
     } catch (Exception $ex) {
         echo "EXCEPTION: " . $ex->getMessage();
     }
@@ -152,8 +153,6 @@ function getBetween($content,$start,$end){
     }
     return '';
   }
-
-
 
 function processMultiCurls($multicurlarray){
     $mh = curl_multi_init();

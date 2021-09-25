@@ -35,8 +35,8 @@ class Item{
     private $_thcContent;
     private $_prices = [
         '1g' => "",
-        '1/8' => "",
-        '1/4' => ""
+        '1/8oz' => "",
+        '1/4oz' => ""
     ];
     
     public function __construct($datacontext){
@@ -92,19 +92,19 @@ class Item{
     }
     
     public function setEigthPrice($price){
-        $this->_prices['1/8'] = $price;
+        $this->_prices['1/8oz'] = $price;
     }
     
     public function getEigthPrice(){
-        return $this->_prices['1/8'];
+        return $this->_prices['1/8oz'];
     }
     
     public function setQuarterPrice($price){
-        $this->_prices['1/4'] = $price;
+        $this->_prices['1/4oz'] = $price;
     }
     
     public function getQuarterPrice(){
-        return $this->_prices['1/4'];
+        return $this->_prices['1/4oz'];
     }
     
     public function setBetaCaryophyllene($terp){
@@ -245,6 +245,9 @@ class Item{
     
     public function save(){
         try{
+            $truncate = "truncate table Items;";
+            $trunc = $this->_dataContext->prepare($truncate);
+            $trunc->execute();
             $saveQuery = "INSERT INTO Items "
                 . "SET BetaCaryophyllene=:BetaCaryophyllene,"
                 . "BetaMyrcene=:BetaMyrcene, "
@@ -258,11 +261,11 @@ class Item{
                 . "Terpinolene=:Terpinolene, "
                 . "cName=:cName, "
                 . "Description=:Description, "
-                //. "EightPrice=:EighthPrice, "
-                //. "QuarterPrice=:QuarterPrice, "
-                //. "GramPrice=:GramPrice, "
+                . "EightPrice=:EighthPrice, "
+                . "QuarterPrice=:QuarterPrice, "
+                . "GramPrice=:GramPrice, "
                 . "Name=:Name, "
-                //. "Lineage=:Lineage, "
+                . "Lineage=:Lineage, "
                 . "ThcContent=:ThcContent, "
                 . "StrainType=:StrainType";
         
