@@ -120,8 +120,8 @@ foreach($products as $item){
     }
     
     $item->setGramPrice($priceArray['1g']);
-    $item->setGramPrice($priceArray['1/8oz']);
-    $item->setGramPrice($priceArray['1/4oz']);
+    $item->setEigthPrice($priceArray['1/8oz']);
+    $item->setQuarterPrice($priceArray['1/4oz']);
     
     $lineageStr = getBetween($desription, "Lineage:", "Batch");
     //$e = explode($lineageStr, "x");
