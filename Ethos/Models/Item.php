@@ -147,7 +147,7 @@ class Item{
     public function getBetaMyrcene(){
         return $this->_terpines['beta-myrcene'];
     }
-    
+  
     public function setMyrcene($terp){
         $this->_terpines['beta-myrcene'] = $terp;
     }
