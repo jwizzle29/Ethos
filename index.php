@@ -11,7 +11,9 @@ $_userName = "thedigit";
 $_password = "mY.q2VDz45k5@O";
 $db = new \PDO("mysql:host=$_serverName;dbname=thedigit_Marijuana", $_userName, $_password);
 $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
+$truncate = "truncate table Items;";
+$trunc = $db->prepare($truncate);
+$trunc->execute();
 
 
 $pages = $initialPage->data->filteredProducts->queryInfo->totalPages;
@@ -53,9 +55,6 @@ foreach($products as $item){
     foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
         //echo "Description : " .$sdata->description . "<br>";  
         $stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
-        $item->setDescription(strip_tags($stripped));
-        //echo "TERP DATA: <br><pre>";
-        //print_r($sdata->terpenes);exit;
         foreach($sdata->terpenes as $terpData){
             $value = "";
             if($terpData->value == ""){
@@ -67,45 +66,10 @@ foreach($products as $item){
             $methodName = "set{$terpName}";
             echo $methodName . "({$value})<br>";
             $item->$methodName($value);
-            //echo $terpData->libraryTerpene->name . "<br>";
-            //echo $terpData->value . "<br>";
         }
     }
     
     $desription = $item->getDescription();
-    
-    
-    
-    /*$item->setPinene(
-            findStr("Pinene-", "%", $desription)
-    );
-    $item->setBetaPinene(
-            findStr("B Pinene--", "%", $desription)
-    );
-    $item->setBetaMyrcene(
-            findStr("B Myrcene-", "%", $desription)
-    );
-    $item->setBetaCaryophyllene(
-            findStr("B Caryophyllene-", "%", $desription)
-    );
-    $item->setBisabolol(
-            findStr("Bisabolol-", "%", $desription)
-    );
-    $item->setCaryophylleneOxide(
-            findStr("CaryophylleneOxide-", "%", $desription)
-    );
-    $item->setHumulene(
-            findStr("Humulene-", "%", $desription)
-    );
-    $item->setLimonene(
-            findStr("Limonene-", "%", $desription)
-    );
-    $item->setLinalool(
-            findStr("Linalool-", "%", $desription)
-    );
-    $item->setTerpinolene(
-            findStr("Terpinolene-", "%", $desription)
-    );*/
     
     $priceArray = [
       '1g' => "",

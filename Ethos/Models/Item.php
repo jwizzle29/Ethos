@@ -254,9 +254,6 @@ class Item{
     
     public function save(){
         try{
-            $truncate = "truncate table Items;";
-            $trunc = $this->_dataContext->prepare($truncate);
-            $trunc->execute();
             $saveQuery = "INSERT INTO Items "
                 . "SET BetaCaryophyllene=:BetaCaryophyllene,"
                 . "BetaMyrcene=:BetaMyrcene, "
