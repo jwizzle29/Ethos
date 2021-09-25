@@ -131,7 +131,7 @@ foreach($products as $item){
     echo "Lineage3 : " . $item->getLineage3() . "<br>";
     echo "Lineage4 : " . $item->getLineage4() . "<br>";
     try{
-        //$item->save();
+        $item->save();
     } catch (Exception $ex) {
         echo "EXCEPTION: " . $ex->getMessage();
     }
