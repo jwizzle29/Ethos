@@ -52,13 +52,15 @@ foreach($products as $item){
     echo $item->getStrainType() . "<br>";
     echo $item->getThcContent() . "<br>";
     echo $productUrl . $item->getCName() . "<br>";
+    
     foreach($strainInfo[$item->getCName()]->data->filteredProducts->products as $sdata){
         //echo "Description : " .$sdata->description . "<br>";  
         $stripped = preg_replace("/[^a-zA-Z0-9\s\p{P}]/", "", $sdata->description);
         $item->setDescription(strip_tags($stripped));
         //echo "TERP DATA: <br><pre>";
         //print_r($sdata->terpenes);exit;
-        if(!empty($sdata->terpenes)){
+        $desription = $item->getDescription();
+        if($sdata->terpenes){
             foreach($sdata->terpenes as $terpData){
                 $value = "";
                 if($terpData->value == ""){
@@ -104,42 +106,7 @@ foreach($products as $item){
             );
         }
         
-    }
-    
-    $desription = $item->getDescription();
-    
-    
-    
-    $item->setPinene(
-            findStr("Pinene-", "%", $desription)
-    );
-    $item->setBetaPinene(
-            findStr("B Pinene--", "%", $desription)
-    );
-    $item->setBetaMyrcene(
-            findStr("B Myrcene-", "%", $desription)
-    );
-    $item->setBetaCaryophyllene(
-            findStr("B Caryophyllene-", "%", $desription)
-    );
-    $item->setBisabolol(
-            findStr("Bisabolol-", "%", $desription)
-    );
-    $item->setCaryophylleneOxide(
-            findStr("CaryophylleneOxide-", "%", $desription)
-    );
-    $item->setHumulene(
-            findStr("Humulene-", "%", $desription)
-    );
-    $item->setLimonene(
-            findStr("Limonene-", "%", $desription)
-    );
-    $item->setLinalool(
-            findStr("Linalool-", "%", $desription)
-    );
-    $item->setTerpinolene(
-            findStr("Terpinolene-", "%", $desription)
-    );
+    }  
     
     $priceArray = [
       '1g' => "",
