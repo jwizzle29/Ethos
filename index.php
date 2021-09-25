@@ -78,7 +78,7 @@ foreach($products as $item){
                 findStr("Pinene-", "%", $desription)
             );
             $item->setBetaPinene(
-                    findStr("B Pinene--", "%", $desription)
+                    findStr("B Pinene-", "%", $desription)
             );
             $item->setBetaMyrcene(
                     findStr("B Myrcene-", "%", $desription)
