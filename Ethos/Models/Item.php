@@ -24,6 +24,7 @@ class Item{
         'humulene' => "",
         'linalool' => "",
         'beta-myrcene' => "",
+        'myrcene' => "",
         'beta-pinene' => "",
         'caryophyllene-oxide' => "",
         'pinene' => "",
@@ -144,6 +145,14 @@ class Item{
     }
     
     public function getBetaMyrcene(){
+        return $this->_terpines['beta-myrcene'];
+    }
+    
+    public function setMyrcene($terp){
+        $this->_terpines['beta-myrcene'] = $terp;
+    }
+    
+    public function getMyrcene(){
         return $this->_terpines['beta-myrcene'];
     }
     
