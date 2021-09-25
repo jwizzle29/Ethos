@@ -106,12 +106,12 @@ foreach($products as $item){
     $item->setGramPrice($priceArray['1/4oz']);
     
     $lineageStr = getBetween($desription, "Lineage:", "Batch");
-    $e = explode($lineageStr, "x");
+    //$e = explode($lineageStr, "x");
     
-    for($i = 1; $i <= count($e);$i++){
-        $methodName = "setLineage$i";
-        $item->$methodName($e[$i]);
-    }
+    //for($i = 1; $i <= count($e);$i++){
+    //    $methodName = "setLineage$i";
+    //    $item->$methodName($e[$i]);
+    //}
     $item->setLineage(
             $lineageStr
     );
